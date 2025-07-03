@@ -5,20 +5,19 @@ from rest_framework.validators import UniqueValidator
 from django.contrib.auth.models import User
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
-        model=User
-        fields=['username','password','email']
+        model = User
+        fields = ['url', 'username', 'email', 'groups']
 class BookingSerializer(serializers.ModelSerializer):
     class Meta:
         model = Booking
-        fields="__all__"
+        fields=['id','first_name','reservation_date','no_of_guests','reservation_slot']
 
 class MenuItemSerializer(serializers.ModelSerializer):
   
-    price_after_tax =serializers.SerializerMethodField(method_name='calculate_tax')
     
     class Meta:
         model = Menu
-        fields =['id','name','price','menu_item_description']
+        fields =['id','name','price','inventory','menu_item_description']
         extra_kwargs = {
             'price': {'min_value':2},
             

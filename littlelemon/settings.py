@@ -42,6 +42,10 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'djoser',
     'restaurant',
+    'django_extensions',
+    'accounts',
+    
+    'rest_framework_simplejwt',
 ]
 
 MIDDLEWARE = [
@@ -54,13 +58,14 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'littlelemon.urls'
 
+ROOT_URLCONF = 'littlelemon.urls'
+LOGIN_URL = '/accounts/login/',
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         # The settings for templates updated for the Graded assessment
-        'DIRS': ['restaurant/templates' ],
+        'DIRS': ['templates' ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -128,10 +133,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 # The settings for static files have been updated for the Graded assessment
-STATIC_URL = 'restaurant/static/'
+STATIC_URL = 'static/'
 
 STATICFILES_DIRS = [
-    "restaurant/static",
+    "static",
 ]
 
 # Default primary key field type
@@ -144,19 +149,19 @@ REST_FRAMEWORK ={
         'rest_framework.renderers.JSONRenderer',
         'rest_framework.renderers.BrowsableAPIRenderer',
         #'rest_framework_xml.renderers.XMLRenderer',
-    ],"""
-    'DEFAULT_FILTER_BACKENDS':[
+    ],
+  """  'DEFAULT_FILTER_BACKENDS':[
         'django_filters.rest_framework.DjangoFilterBackend',
         'rest_framework.filters.OrderingFilter',
         'rest_framework.filters.SearchFilter',
     ],"""
-    'DEFAULT_PAGINATION_CLASS':'rest_framework.pagination.PageNumberPagination',
-    'PAGE_SIZE':2,
+   
     'DEFAULT_AUTHENTICATION_CLASSES':[
-       #'rest_framework_simplejwt.authentication.JWTAuthentication',
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
         'rest_framework.authentication.TokenAuthentication',
         'rest_framework.authentication.SessionAuthentication',
     ],
+    
    #'DEFAULT_THROTTLE_RATES':{
       # 'anon':'2/minute',
        #'user':'5/minute',
@@ -164,7 +169,9 @@ REST_FRAMEWORK ={
    #}
 
 }
-
+SIMPLE_JWT = {
+        'AUTH_HEADER_TYPES':['JWT',],
+    }
 DJOSER={
     "USER_ID_FIELD":"username"
     
